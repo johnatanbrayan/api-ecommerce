@@ -1,8 +1,13 @@
 package br.com.johnatanbrayan.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Categoria implements Serializable{
@@ -20,6 +25,12 @@ public class Categoria implements Serializable{
 		this.id = id;
 		this.nome = nome;
 	}
+	
+	private List<Produto> produtos = new ArrayList<>();
+
+	
+	public List<Produto> getProdutos() { return this.produtos; }
+	public void setProdutos(List<Produto> produtos) { this.produtos = produtos; }
 	
 	public Integer getId() { return this.id; }
 	public void setId(Integer id) { this.id = id; }
