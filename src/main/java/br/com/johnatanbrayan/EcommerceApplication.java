@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.johnatanbrayan.domain.Categoria;
+import br.com.johnatanbrayan.domain.Cidade;
+import br.com.johnatanbrayan.domain.Estado;
 import br.com.johnatanbrayan.domain.Produto;
 import br.com.johnatanbrayan.repository.CategoriaRepository;
+import br.com.johnatanbrayan.repository.CidadeRepository;
+import br.com.johnatanbrayan.repository.EstadoRepository;
 import br.com.johnatanbrayan.repository.ProdutoRepository;
 
 @SpringBootApplication
@@ -24,6 +28,12 @@ public class EcommerceApplication implements CommandLineRunner{
 	
 	@Autowired
 	ProdutoRepository produtoRepository;
+	
+	@Autowired
+	CidadeRepository cidadeRepository;
+	
+	@Autowired
+	EstadoRepository estadoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -45,5 +55,21 @@ public class EcommerceApplication implements CommandLineRunner{
 		prod3.getCategorias().addAll(Arrays.asList(cat1));
 		
 		produtoRepository.saveAll(Arrays.asList(prod1,prod2,prod3));
+		
+		Estado e1 = new Estado(null,"Minas Gerais");
+		Estado e2 = new Estado(null,"São Paulo");
+		
+		Cidade c1 = new Cidade(null,"Urbelândia",e1);
+		Cidade c2 = new Cidade(null,"São Paulo",e2);
+		Cidade c3 = new Cidade(null,"Campinas",e2);	
+		
+		//e1.setCidade(Arrays.asList(c1,c2,c3));
+		
+		e1.getCidade().addAll(Arrays.asList(c1,c2,c3));
+		
+		estadoRepository.saveAll(Arrays.asList(e1,e2));
+		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		
 	}
 }
