@@ -9,10 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.johnatanbrayan.domain.Categoria;
 import br.com.johnatanbrayan.domain.Cidade;
+import br.com.johnatanbrayan.domain.Endereco;
 import br.com.johnatanbrayan.domain.Estado;
 import br.com.johnatanbrayan.domain.Produto;
 import br.com.johnatanbrayan.repository.CategoriaRepository;
 import br.com.johnatanbrayan.repository.CidadeRepository;
+import br.com.johnatanbrayan.repository.EnderecoRepository;
 import br.com.johnatanbrayan.repository.EstadoRepository;
 import br.com.johnatanbrayan.repository.ProdutoRepository;
 
@@ -34,6 +36,9 @@ public class EcommerceApplication implements CommandLineRunner{
 	
 	@Autowired
 	EstadoRepository estadoRepository;
+	
+	@Autowired
+	EnderecoRepository enderecoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,6 +75,12 @@ public class EcommerceApplication implements CommandLineRunner{
 		estadoRepository.saveAll(Arrays.asList(e1,e2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Jardim", "Apto 203", "38220834", c1);
+		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Centro", "Sala 800", "38777012", c2);
 		
+		c1.getEndereco().addAll(Arrays.asList(end1));
+		c2.getEndereco().addAll(Arrays.asList(end2));
+		
+		enderecoRepository.saveAll(Arrays.asList(end1,end2));
 	}
 }
