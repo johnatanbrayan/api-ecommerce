@@ -1,8 +1,6 @@
 package br.com.johnatanbrayan.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Cidade implements Serializable {
-	public static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,9 +30,6 @@ public class Cidade implements Serializable {
 		this.estado = estado;
 	}
 	
-	@OneToMany(mappedBy="cidade")
-	public List<Endereco> enderecos = new ArrayList<>();
-	
 	public Integer getId() { return this.id; }
 	public void setId(Integer id) { this.id = id; }
 	
@@ -44,9 +38,6 @@ public class Cidade implements Serializable {
 	
 	public Estado getEstado() { return this.estado; }
 	public void setEstado(Estado estado) { this.estado = estado; }
-	
-	public List<Endereco> getEndereco() { return this.enderecos; }
-	public void setEndereco(List<Endereco> enderecos) { this.enderecos = enderecos; }
 
 	@Override
 	public int hashCode() {

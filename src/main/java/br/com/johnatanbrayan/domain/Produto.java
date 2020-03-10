@@ -16,13 +16,20 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Produto implements Serializable{
-	public static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String	nome;
 	private Double preco;
+	
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name="produto_categoria",
+	joinColumns = @JoinColumn(name="produto_id"),
+	inverseJoinColumns = @JoinColumn(name="categoria_id"))
+	private List<Categoria> categorias= new ArrayList<>();
 	
 	public Produto() {}
 	
@@ -32,16 +39,6 @@ public class Produto implements Serializable{
 		this.preco = preco;
 	}
 	
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name="produto_categoria",
-	joinColumns = @JoinColumn(name="produto_id"),
-	inverseJoinColumns = @JoinColumn(name="categoria_id"))
-	private List<Categoria> categorias= new ArrayList<>();
-
-	public List<Categoria> getCategorias(){ return this.categorias; }
-	public void setCategorais(List<Categoria> categorias) { this.categorias = categorias; }
-	
 	public Integer getId() { return this.id; }
 	public void setId(Integer id) { this.id = id; }
 	
@@ -50,6 +47,9 @@ public class Produto implements Serializable{
 	
 	public Double getPreco() { return this.preco; }
 	public void setPreco(Double preco) { this.preco = preco; }
+	
+	public List<Categoria> getCategorias(){ return this.categorias; }
+	public void setCategorais(List<Categoria> categorias) { this.categorias = categorias; }
 
 	@Override
 	public int hashCode() {

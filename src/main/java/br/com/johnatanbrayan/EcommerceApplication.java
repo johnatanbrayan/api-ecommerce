@@ -78,9 +78,6 @@ public class EcommerceApplication implements CommandLineRunner{
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Jardim", "Apto 203", "38220834", c1);
 		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Centro", "Sala 800", "38777012", c2);
 		
-		c1.getEndereco().addAll(Arrays.asList(end1));
-		c2.getEndereco().addAll(Arrays.asList(end2));
-		
 		enderecoRepository.saveAll(Arrays.asList(end1,end2));
 	}
 }
