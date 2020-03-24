@@ -9,26 +9,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
-	public String logradouro;
-	public String numero;
-	public String bairro;
-	public String complemento;
-	public String cep;
-	
+	private Integer id;
+	private String logradouro;
+	private String numero;
+	private String bairro;
+	private String complemento;
+	private String cep;	
+
 	@ManyToOne()
 	@JoinColumn(name="cidade_id")
-	public Cidade cidade;
+	private Cidade cidade;
 	
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name="cliente_id")
-	public Cliente cliente;
+	private Cliente cliente;
 	
 	public Endereco() {}
 	

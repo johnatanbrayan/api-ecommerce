@@ -88,9 +88,10 @@ public class EcommerceApplication implements CommandLineRunner{
 		Cidade c2 = new Cidade(null,"São Paulo",e2);
 		Cidade c3 = new Cidade(null,"Campinas",e2);	
 		
-		//e1.setCidade(Arrays.asList(c1,c2,c3));
-		
-		e1.getCidade().addAll(Arrays.asList(c1,c2,c3));
+		  
+		e1.getCidade().addAll(Arrays.asList(c1));
+		e2.getCidade().addAll(Arrays.asList(c2,c3));
+
 		
 		estadoRepository.saveAll(Arrays.asList(e1,e2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
