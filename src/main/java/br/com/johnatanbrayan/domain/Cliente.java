@@ -14,15 +14,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.johnatanbrayan.domain.enums.TipoCliente;
 
 @Entity
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
@@ -35,12 +37,13 @@ public class Cliente implements Serializable{
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {}
 	
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -48,8 +51,8 @@ public class Cliente implements Serializable{
 		this.tipoCliente = tipoCliente.getCod();
 	}
 	
-	public Integer getCliente() { return this.id; }
-	public void setCliente(Integer id) { this.id = id; }
+	public Long getId() { return this.id; }
+	public void setId(Long id) { this.id = id; }
 	
 	public String getNome() { return this.nome; }
 	public void setNome(String nome) { this.nome = nome; }

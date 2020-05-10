@@ -2,6 +2,8 @@ package br.com.johnatanbrayan.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,9 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Pedido implements Serializable {
@@ -20,25 +25,29 @@ public class Pedido implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
+	private Long id;
 	
-	@Temporal(TemporalType.DATE)
-	public Date instance;
+	@JsonFormat(pattern = "dd//MM/yyyy HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date instance;
 	
 	@ManyToOne()
 	@JoinColumn(name="cliente_id")
-	public Cliente cliente;
+	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn(name="endereco_id")
-	public Endereco enderecoEntrega;
+	private Endereco enderecoEntrega;
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
-	public Pagamento pagamento;
+	private Pagamento pagamento;
+	
+	@OneToMany(mappedBy="id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido() {}
 	
-	public Pedido(Integer id, Date instance, Cliente cliente, Endereco enderecoEntrega) {
+	public Pedido(Long id, Date instance, Cliente cliente, Endereco enderecoEntrega) {
 		this.id = id;
 		this.instance = instance;
 		this.cliente = cliente;
@@ -46,8 +55,8 @@ public class Pedido implements Serializable {
 		//this.pagamento = pagamento;
 	}
 	
-	public Integer getId() { return this.id; }
-	public void setId(Integer id) { this.id = id; }
+	public Long getId() { return this.id; }
+	public void setId(Long id) { this.id = id; }
 	
 	public Date getInstance() { return this.instance; }
 	public void setInstance(Date instance) { this.instance = instance; }
@@ -60,6 +69,9 @@ public class Pedido implements Serializable {
 	
 	public Pagamento getPagamento() { return this.pagamento; }
 	public void setPagamento(Pagamento pagamento) { this.pagamento = pagamento; }
+	
+	public Set<ItemPedido> getItens() { return this.itens; }
+	public void setItens(Set<ItemPedido> itens) { this.itens = itens; }
 
 	@Override
 	public int hashCode() {
