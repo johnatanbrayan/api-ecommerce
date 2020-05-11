@@ -8,13 +8,14 @@ import java.io.Serializable;
  */
 public class StandardError implements Serializable{
 	
-	public static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	private Integer status;
 	private String msg;
 	private Long timeStamp;
 	
 	public StandardError() {}
+	
 	public StandardError(Integer status, String msg, Long timeStamp) {
 		this.status = status;
 		this.msg = msg;
