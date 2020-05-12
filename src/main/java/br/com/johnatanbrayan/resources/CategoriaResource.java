@@ -1,7 +1,6 @@
 package br.com.johnatanbrayan.resources;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,23 +35,30 @@ public class CategoriaResource {
 	}
 	*/
 	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAllCategoria() {
+		List<Categoria> categorias = categoriaService.findAllCategoria();
+		List<CategoriaDTO> categoriasDTO = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(categoriasDTO);
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Categoria> get(@PathVariable Long id) {
-		Categoria obj = categoriaService.find(id);
-		return ResponseEntity.ok().body(obj);
+		Categoria categoria = categoriaService.find(id);
+		return ResponseEntity.ok().body(categoria);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insertCategoria(@RequestBody Categoria obj) throws URISyntaxException {
-		obj = categoriaService.insertCategoria(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	public ResponseEntity<Void> insertCategoria(@RequestBody Categoria categoria) {
+		categoria = categoriaService.insertCategoria(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> updateCategoria(@RequestBody Categoria obj, @PathVariable Long id) {
-		obj.setId(id);
-		obj = categoriaService.updateCategoria(obj);
+	public ResponseEntity<Void> updateCategoria(@RequestBody Categoria categoria, @PathVariable Long id) {
+		categoria.setId(id);
+		categoria = categoriaService.updateCategoria(categoria);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -60,13 +66,6 @@ public class CategoriaResource {
 	public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
 		categoriaService.deleteCategoria(id);
 		return ResponseEntity.noContent().build();
-	}
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> findAllCategoria() {
-		List<Categoria> categorias = categoriaService.findAllCategoria();
-		List<CategoriaDTO> categoriasDTO = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(categoriasDTO);
 	}
 	
 }

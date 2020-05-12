@@ -16,7 +16,7 @@ public class PedidoService {
 	private PedidoRepository pedidoRepository;
 	
 	public Pedido find(Long id) {
-		Optional<Pedido> obj = pedidoRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Pedido não encontrado. Id: " + id + ",tipo: " + Pedido.class.getName()));
+		Optional<Pedido> pedido = pedidoRepository.findById(id);
+		return pedido.orElseThrow(() -> new ObjectNotFoundException("Pedido não encontrado. Id: " + id + ",tipo: " + Pedido.class.getName()));
 	}
 }
