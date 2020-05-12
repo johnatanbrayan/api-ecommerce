@@ -3,7 +3,7 @@ package br.com.johnatanbrayan.domain.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 import br.com.johnatanbrayan.domain.Categoria;
 
@@ -12,8 +12,8 @@ public class CategoriaDTO implements Serializable {
 	
 	private Long id;
 	
-	@NotEmpty
-	@Size(min=5, max=80, message = "Nome tem que ser entre 5 e 80 caracteres.")
+	@NotEmpty(message="Nome não pode estar vazio.")
+	@Length(min=5, max=80, message="Nome tem que ser entre 5 e 80 caracteres.")
 	private String nome; 
 	
 	public CategoriaDTO() {}
