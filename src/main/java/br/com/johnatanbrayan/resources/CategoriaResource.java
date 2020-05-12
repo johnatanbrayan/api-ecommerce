@@ -2,6 +2,8 @@ package br.com.johnatanbrayan.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.johnatanbrayan.domain.Categoria;
+import br.com.johnatanbrayan.domain.dto.CategoriaDTO;
 import br.com.johnatanbrayan.service.CategoriaService;
 
 @RestController
@@ -58,4 +61,12 @@ public class CategoriaResource {
 		categoriaService.deleteCategoria(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAllCategoria() {
+		List<Categoria> categorias = categoriaService.findAllCategoria();
+		List<CategoriaDTO> categoriasDTO = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(categoriasDTO);
+	}
+	
 }
