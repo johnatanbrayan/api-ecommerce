@@ -48,9 +48,9 @@ public class CategoriaResource {
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPageCategoria(@RequestParam(value= "page", defaultValue="0") Integer page, @RequestParam(value="linePerPage", defaultValue="24") Integer linePerPage, @RequestParam(value="direction", defaultValue="ASC") String direction, @RequestParam(value="orderBy", defaultValue="nome") String orderBy) {
-		Page<Categoria> categorias = categoriaService.findPageCategoria(page, linePerPage, direction, orderBy);
-		Page<CategoriaDTO> categoriasDTO = categorias.map(categoria -> new CategoriaDTO(categoria));
-		return ResponseEntity.ok().body(categoriasDTO);
+		Page<Categoria> pageCategorias = categoriaService.findPageCategoria(page, linePerPage, direction, orderBy);
+		Page<CategoriaDTO> pageCategoriasDTO = pageCategorias.map(categoria -> new CategoriaDTO(categoria));
+		return ResponseEntity.ok().body(pageCategoriasDTO);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -80,5 +80,4 @@ public class CategoriaResource {
 		categoriaService.deleteCategoria(id);
 		return ResponseEntity.noContent().build();
 	}
-	
 }
