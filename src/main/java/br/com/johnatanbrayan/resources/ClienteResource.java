@@ -3,6 +3,8 @@ package br.com.johnatanbrayan.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +51,7 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> updateCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable Long id) {
+	public ResponseEntity<Void> updateCliente(@Valid @RequestBody ClienteDTO clienteDTO, @PathVariable Long id) {
 		Cliente cliente = clienteService.fromDTO(clienteDTO);
 		cliente.setId(id);
 		cliente = clienteService.updateCliente(cliente);

@@ -37,11 +37,17 @@ public class ClienteService {
 	}
 	
 	public Cliente updateCliente(Cliente cliente) {
-		find(cliente.getId());
-		return clienteRepository.save(cliente);
+		Cliente updateCliente = find(cliente.getId());
+		updateData(updateCliente, cliente);
+		return clienteRepository.save(updateCliente);
 	}
 	
 	public Cliente fromDTO(ClienteDTO clienteDTO) {
 		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(),null,null);
+	}
+	
+	public void updateData(Cliente updateCliente, Cliente cliente ) {
+		updateCliente.setNome(cliente.getNome());
+		updateCliente.setEmail(cliente.getEmail());
 	}
 }
