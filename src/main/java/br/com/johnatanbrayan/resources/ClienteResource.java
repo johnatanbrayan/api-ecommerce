@@ -54,7 +54,13 @@ public class ClienteResource {
 	public ResponseEntity<Void> updateCliente(@Valid @RequestBody ClienteDTO clienteDTO, @PathVariable Long id) {
 		Cliente cliente = clienteService.fromDTO(clienteDTO);
 		cliente.setId(id);
-		cliente = clienteService.updateCliente(cliente);
+		clienteService.updateCliente(cliente);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
+		clienteService.deleteCliente(id);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.johnatanbrayan.domain.Cliente;
 import br.com.johnatanbrayan.domain.dto.ClienteDTO;
 import br.com.johnatanbrayan.repository.ClienteRepository;
+import br.com.johnatanbrayan.service.exception.DataIntegrityException;
 import br.com.johnatanbrayan.service.exception.ObjectNotFoundException;
 
 @Service
@@ -40,6 +42,15 @@ public class ClienteService {
 		Cliente updateCliente = find(cliente.getId());
 		updateData(updateCliente, cliente);
 		return clienteRepository.save(updateCliente);
+	}
+	
+	public void deleteCliente(Long id) {
+		find(id);
+		try {
+			clienteRepository.deleteById(id);
+		} catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível exluir um cliente que possui relacionamento vinculados.");
+		}
 	}
 	
 	public Cliente fromDTO(ClienteDTO clienteDTO) {
