@@ -28,21 +28,22 @@ public class CategoriaService {
 				"Objeto não encontrado! Id: "+id+" ,Tipo: "+Categoria.class.getName()));
 	}
 	
-	public Categoria insertCategoria(Categoria obj) {
-		obj.setId(null);
-		return categoriaRepository.save(obj);
+	public Categoria insertCategoria(Categoria categoria) {
+		categoria.setId(null);
+		return categoriaRepository.save(categoria);
 	}
 	
-	public Categoria updateCategoria(Categoria obj) {
-		find(obj.getId());
-		return categoriaRepository.save(obj);
+	public Categoria updateCategoria(Categoria categoria) {
+		Categoria updateCategoria = find(categoria.getId());
+		updateData(updateCategoria, categoria);
+		return categoriaRepository.save(updateCategoria);
 	}
 	
 	public void deleteCategoria(Long id) {
 		find(id);
 		
 		try {
-		categoriaRepository.deleteById(id);
+			categoriaRepository.deleteById(id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos!!");
 		}
@@ -59,5 +60,9 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
 		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	}
+	
+	public void updateData(Categoria updateCategoria, Categoria categoria) {
+		updateCategoria.setNome(categoria.getNome());
 	}
 }
