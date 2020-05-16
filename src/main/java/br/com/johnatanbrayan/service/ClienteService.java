@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.johnatanbrayan.domain.Cliente;
+import br.com.johnatanbrayan.domain.dto.ClienteDTO;
 import br.com.johnatanbrayan.repository.ClienteRepository;
 import br.com.johnatanbrayan.service.exception.ObjectNotFoundException;
 
@@ -33,5 +34,14 @@ public class ClienteService {
 		PageRequest pageRequest = PageRequest.of(page, linePerPage, Direction.valueOf(direction), orderBy);
 		Page<Cliente> pageClientes = clienteRepository.findAll(pageRequest);
 		return pageClientes;
+	}
+	
+	public Cliente updateCliente(Cliente cliente) {
+		find(cliente.getId());
+		return clienteRepository.save(cliente);
+	}
+	
+	public Cliente fromDTO(ClienteDTO clienteDTO) {
+		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(),null,null);
 	}
 }
