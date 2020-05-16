@@ -59,6 +59,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(categoria);
 	}
 	
+	@org.springframework.transaction.annotation.Transactional
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insertCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 		Categoria categoria = categoriaService.fromDTO(categoriaDTO);

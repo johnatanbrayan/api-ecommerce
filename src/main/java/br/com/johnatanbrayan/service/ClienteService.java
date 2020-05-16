@@ -32,7 +32,7 @@ public class ClienteService {
 	
 	public Cliente find(Long id) {
 		Optional<Cliente> cliente = clienteRepository.findById(id);
-		return cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado: "+id+" ,Tipo: "+
+		return cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto cliente não encontrado: "+id+" ,Tipo: "+
 		Cliente.class.getName()));
 	}
 	
@@ -85,7 +85,6 @@ public class ClienteService {
 		if(clienteNewDTO.getTelefone2() != null) {
 			cliente.getTelefones().add(clienteNewDTO.getTelefone3());
 		}
-		
 		return cliente;
 	}
 	

@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.johnatanbrayan.domain.Cliente;
 import br.com.johnatanbrayan.domain.dto.ClienteDTO;
 import br.com.johnatanbrayan.domain.dto.ClienteNewDTO;
-import br.com.johnatanbrayan.repository.ClienteRepository;
 import br.com.johnatanbrayan.service.ClienteService;
 
 @RestController
@@ -29,9 +28,6 @@ public class ClienteResource {
 	
 	@Autowired
 	private ClienteService clienteService;
-	
-	@Autowired
-	private ClienteRepository clienteRepository;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Cliente> getCliente(@PathVariable Long id) {
@@ -53,6 +49,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(pageClientesDTO);
 	}
 	
+	@org.springframework.transaction.annotation.Transactional
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insertCliente(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
 		Cliente cliente = clienteService.fromDTO(clienteNewDTO);
