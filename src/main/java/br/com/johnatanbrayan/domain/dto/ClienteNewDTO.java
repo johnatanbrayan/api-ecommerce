@@ -2,20 +2,35 @@ package br.com.johnatanbrayan.domain.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Nome não pode ficar vazio")
 	private String nome;
+	
+	@NotEmpty(message="Email não pode ficar vazio")
+	@Email
 	private String email;
+	
+	@NotEmpty(message="Esse campo não pode ficar vazio")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
+	@NotEmpty(message="Logradouro não pode ficar vazio")
 	private String logradouro;
+	
+	@NotEmpty(message="Número não pode ficar vazio")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty(message="CEP não pode ficar vazio")
 	private String cep;
 	
+	@NotEmpty(message="Telefone não pode ficar vazio")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
