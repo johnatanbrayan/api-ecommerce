@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import br.com.johnatanbrayan.service.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -17,6 +20,7 @@ public class ClienteNewDTO implements Serializable {
 	
 	@NotEmpty(message="Esse campo não pode ficar vazio")
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
 	
 	@NotEmpty(message="Logradouro não pode ficar vazio")
